@@ -1,9 +1,17 @@
 services:
   - type: web
-    name: jacksan-stars
+    name: blackup
     runtime: python
+    plan: free
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn server:app --bind 0.0.0.0:$PORT --workers 1 --threads 4
+    startCommand: gunicorn server:app --workers 1 --threads 8 --bind 0.0.0.0:$PORT
+    healthCheckPath: /health
     envVars:
-      - key: ADMIN_KEY
+      - key: BOT_TOKEN
         sync: false
+      - key: DATABASE_URL
+        sync: false
+      - key: ADMIN_IDS
+        sync: false
+      - key: PYTHON_VERSION
+        value: 3.11.9
